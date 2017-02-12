@@ -121,7 +121,7 @@ var messages = {
         }
 }
 
-var msg_endpoint = 'http://localhost:8000/api/messages/'
+var msg_endpoint = 'http://127.0.0.1:8000/api/messages/'
 
 var message_template = {
         "data": {

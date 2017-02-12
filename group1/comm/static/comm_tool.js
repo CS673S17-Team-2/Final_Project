@@ -66,7 +66,7 @@ function search_show(){
   if ($('div#message_search').attr('class').indexOf('hidden') == -1) {
     $('div#message_search').addClass('hidden');
     $('div.messagecontent').css('padding-top', '70px');
-  } 
+  }
   else {
     $('div#message_search').removeClass('hidden');
     $('div.messagecontent').css('padding-top', '130px');
@@ -87,7 +87,7 @@ global.emit('user', {
   'action': 'connect',
 });
 
-global.on('room', function(room) { 
+global.on('room', function(room) {
 	add_new_room(room);
 });
 
@@ -124,13 +124,13 @@ global.on('user', function(user){
   } else if (user.action == 'disconnected') {
     user_link.addClass('disabled');
   }
-  
+
 });
 
 sockets = {};
 $.getJSON('http://' + server_host + ':' + server_port + '/api/rooms/',function(data){
   data.forEach(function(room){
-    // add_socket(room);
+    add_socket(room);
   });
 });
 
@@ -291,7 +291,7 @@ function add_new_room(room) {
 function populate_user_list() {
   $.getJSON('http://' + server_host + ':' + server_port + '/api/users/?format=json', function(all_users) { 
 
-    $.getJSON('http://' + server_host + ':3000/users', function(connected_users){
+    $.getJSON('http://' + host_name + ':3000/users', function(connected_users){
 
       // make sure the current user is included in the list
       connected_users.push(user);
@@ -301,7 +301,7 @@ function populate_user_list() {
       all_users.forEach(function(user) {
         var user_link = $('<li />', {
           'class': _.contains(online_users, user.username) ? 'user' : 'user disabled',
-          'html': 
+          'html':
           $('<a />', {
             'href': '#'
           })
@@ -331,15 +331,15 @@ $(document).on('change', '.btn-file :file', function() {
 
 $(document).ready( function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-        
+
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
-        
+
         if( input.length ) {
             input.val(log);
         } else {
             if( log ) alert(log);
-        }        
+        }
     });
 });
 
@@ -349,7 +349,7 @@ $(document).ready(function(){
   populate_room_list();
   populate_user_list();
 
-  $('div#room-list').on('click', 'a', function(){ 
+  $('div#room-list').on('click', 'a', function(){
     if ($(this).attr('id') != 'create-room' ) {
       switch_room( $(this).attr('id') );
     }
@@ -361,7 +361,7 @@ $(document).ready(function(){
     $.ajax({
       url: 'http://' + server_host + ':3000/upload',
       type: 'POST',
-      data: new FormData( this ), 
+      data: new FormData( this ),
       processData: false,
       contentType: false,
       success: function(file_path){ 
@@ -409,4 +409,4 @@ $(document).ready(function(){
  $("#search_button_box").click(function () {
    get_search_results();
  });
-}); 
+});
